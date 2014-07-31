@@ -27,7 +27,7 @@ def start_other(arg)
 end
 
 def run_tests
-  exec("rake test")
+  exec("RAILS_ENV=test rake test")
 end
 
 case ARGV.count
