@@ -29,3 +29,4 @@ RUN rake assets:precompile
 
 ENV PATH /opt/myapp/bin:$PATH
 ENTRYPOINT ["/opt/myapp/bin/start.rb"]
+CMD ["server"]
