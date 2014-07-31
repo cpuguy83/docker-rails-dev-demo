@@ -12,8 +12,20 @@ ADD Gemfile /opt/myapp/
 ADD Gemfile.lock /opt/myapp/
 RUN bundle install
 
+# This will now install anything in Gemfile.tip
+# This way you can add new gems without rebuilding _everything_ to add 1 gem
+# Anything that was already installed from the main Gemfile will be re-used
+ADD Gemfile.tip /opt/myapp/
+RUN bundle install
+
+
 # Any change to any file after this point (if not in .dockerignore) will cause the build cache to be busted here
 # This includes changes to the Dockerfile itself
 ADD . /opt/myapp
-RUN rake assets:precompile # `config.assets.initialize_on_precompile = false` in application.rb
-CMD exec unicorn_rails
+
+# `config.assets.initialize_on_precompile = false` in application.rb
+# If your assets are calling Ruby you can't do this optimization, but otherwise this is good!
+RUN rake assets:precompile
+
+ENV PATH /opt/myapp/bin:$PATH
+ENTRYPOINT ["/opt/myapp/bin/start.rb"]
