@@ -19,7 +19,7 @@ ADD Gemfile.tip /opt/myapp/
 RUN bundle install
 
 
-# Add rake and it's depdencies
+# Add rake and its dependencies
 ADD config /opt/myapp/config
 ADD Rakefile /opt/myapp/
 
