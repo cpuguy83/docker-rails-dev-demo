@@ -1,2 +1,4 @@
 tmp/*
 log/*
+db/*.sqlite3
+.git
