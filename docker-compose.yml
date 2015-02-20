@@ -1,0 +1,26 @@
+app:
+  build: .
+  volumes:
+    - ./app/assets:/opt/myapp/app/assets
+    - ./db:/opt/myapp/db
+
+  ports:
+    - "8080:80"
+  links:
+    - redis:redisdb
+  environment:
+    SECRET_KEY_BASE: much_security
+
+
+redis:
+  image: "redis"
+
+worker:
+  build: .
+  links:
+    - redis:redisdb
+  command: jobs
+  volumes_from:
+    - app
+  environment:
+    SECRET_KEY_BASE: much_security
