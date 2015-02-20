@@ -22,18 +22,11 @@ RUN bundle install
 ADD config /opt/myapp/config
 ADD Rakefile /opt/myapp/
 
-# Build optimization so we only do asset precompilation if something in assets changed
-# `config.assets.initialize_on_precompile = false` in application.rb
-# If your assets are calling Ruby you can't do this optimization, but otherwise this is good!
-ADD app/assets /opt/myapp/app/assets
-RUN rake assets:precompile
-
 # Add everything else
 # Any change to any file after this point (if not in .dockerignore) will cause the build cache to be busted here
 # This includes changes to the Dockerfile itself
 # Goal here is to do as little as possible after this entry
 ADD . /opt/myapp
-
 
 ENV PATH /opt/myapp/bin:$PATH
 ENTRYPOINT ["/opt/myapp/bin/start.rb"]
