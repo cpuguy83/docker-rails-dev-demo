@@ -1,6 +1,5 @@
-FROM cpuguy83/ruby-mri
+FROM ruby:2.2
 RUN apt-get update && apt-get install -y sqlite3 libsqlite3-dev openssl libssl-dev libyaml-dev libreadline-dev libxml2-dev libxslt1-dev
-RUN gem install bundler && mkdir /opt/myapp
 WORKDIR /opt/myapp
 ENV RAILS_ENV production
 
