@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'socket'
+
+
 def start_selector(arg)
   case arg
   when 'jobs'
@@ -14,7 +17,8 @@ def start_selector(arg)
 end
 
 def start_server
-  exec('unicorn_rails')
+  puts "server starting... connect via http://#{Socket.ip_address_list[1].ip_address} when ready"
+  exec("puma", "-p", "80")
 end
 
 def start_jobs
@@ -22,7 +26,6 @@ def start_jobs
 end
 
 def start_other(arg)
-  puts "Unknown argument used, starting in shell: #{arg}"
   exec(arg)
 end
 
